@@ -167,9 +167,12 @@ paths:
                   name:
                     type: string
                     example: 杉
+                    description: 名前
                   email:
                     type: string
                     example: sugi@gmail.com
+                    description: メールアドレス
+                    format: email
                 required:
                   - name
                   - email
@@ -209,6 +212,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: string
         '500':
           description: サーバーエラーが発生しました
           content:
