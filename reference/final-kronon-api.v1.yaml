@@ -48,7 +48,7 @@ paths:
                   value:
                     message: リクエストに失敗しました
         '500':
-          description: Internal Server Error
+          description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
@@ -90,7 +90,7 @@ paths:
         '200':
           description: ログアウト成功
         '500':
-          description: Internal Server Error
+          description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
