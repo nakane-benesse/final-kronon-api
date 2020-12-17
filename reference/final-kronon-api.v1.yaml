@@ -1,4 +1,7 @@
 openapi: 3.0.0
+tags:
+  - name: FinalAPI
+    description: openapi varsion
 info:
   title: final-kronon-api
   version: '1.0'
