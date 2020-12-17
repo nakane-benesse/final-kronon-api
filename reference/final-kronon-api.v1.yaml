@@ -7,11 +7,11 @@ servers:
 paths:
   /login:
     post:
-      summary: ''
+      summary: Login
       operationId: post-login
       responses:
         '200':
-          description: OK
+          description: ログイン成功
           content:
             application/json:
               schema:
@@ -22,26 +22,27 @@ paths:
                     description: ユーザーID情報を暗号化したもの
                   user:
                     $ref: '#/components/schemas/User'
+              examples:
+                example-1:
+                  value:
+                    token: ユーザーの情報
+                    user:
+                      name: 杉杉
+                      email: sugisugi@email.com
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: パラメータが不正だよ
+              examples: {}
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       requestBody:
         content:
           application/json:
@@ -59,25 +60,29 @@ paths:
               required:
                 - email
                 - password
+            examples:
+              example-1:
+                value:
+                  email: sugisugi@email.com
+                  password: Kronon1122
       security: []
+      description: ログインボタンをタップした時に使用する
   /logout:
     delete:
       summary: ''
       operationId: delete-logout
       responses:
         '200':
-          description: OK
+          description: ログアウト成功
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       parameters: []
+      description: ログアウトボタンをタップした時に使用する
   /users:
     parameters: []
     post:
@@ -452,57 +457,35 @@ paths:
                   その日の最初の予定（max２つ）を抽出してから返す
                 items:
                   $ref: '#/components/schemas/Schedule'
-              examples:
-                example-1:
-                  value:
-                    - id: 1
-                      title: くろのん作成
-                      schedule_date: '2020-12-31'
-                      place: 0
-                      start_time: '13:00:00'
-                      end_time: '14:00:00'
-                      content: くろのんのAPIを作る
-                      delete_flag: 0
+              examples: {}
         '400':
-          description: Bad Request
+          description: 不正なリクエスト
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example:
-                  value:
-                    message: パラメータが不正だよ
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証に失敗したよ
+              examples: {}
         '404':
           description: サイトが見つかりませんでした
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/404NotFoundError'
-              examples:
-                example-1:
-                  value:
-                    message: サイトが見つからなかったよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-calendar
       requestBody:
         content:
