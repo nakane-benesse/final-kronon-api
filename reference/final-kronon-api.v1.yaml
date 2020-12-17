@@ -514,6 +514,12 @@ paths:
                   type: string
                   format: date
                   description: 表示するための日付
+              required:
+                - date
+            examples:
+              example-1:
+                value:
+                  date: '2020-12-31'
         description: ''
       description: カレンダーを表示する
     parameters: []
