@@ -708,29 +708,86 @@ components:
       type: object
       description: ''
       x-examples:
-        Alice Smith:
-          id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
+        example-1:
+          name: 杉
+          email: sugi@email.com
       properties:
         name:
           type: string
+          example: 杉
+          description: 名前
         email:
           type: string
-          format: email
+          example: sugi@email.com
+          description: メールアドレス
       required:
         - name
         - email
     Schedule:
       title: Schedule
       type: object
+      x-examples:
+        example-1:
+          id: 1
+          title: くろのん作成
+          schedule_date: '2020-12-31'
+          place: 0
+          start_time: '13:00:00'
+          end_time: '14:00:00'
+          content: くろのんのAPIを作る
+          delete_flag: 0
+      description: ''
       properties:
         id:
+          type: integer
+          example: 1
+          description: 予定の識別
+        title:
           type: string
+          example: くろのん作成
+          description: タイトル
+        schedule_date:
+          type: string
+          example: '2020-12-31'
+          format: date
+          description: 日付 yyyy-MM-dd形式
+        place:
+          type: integer
+          enum:
+            - 0
+            - 1
+            - 2
+          description: '場所 0:オフィス/1:在宅/2:外出'
+          example: 0
+        start_time:
+          type: string
+          example: '13:00:00'
+          format: time
+          description: '開始時間hh:mm形式'
+        end_time:
+          type: string
+          example: '14:00:00'
+          format: time
+          description: '終了時間hh:mm形式'
+        content:
+          type: string
+          example: くろのんのAPIを作る
+          description: 内容
+        delete_flag:
+          type: integer
+          description: |-
+            0=>notdelete
+            1=>deleted 
+          default: 0
+          example: 0
+      required:
+        - id
+        - title
+        - schedule_date
+        - place
+        - start_time
+        - end_time
+        - delete_flag
     400BadRequestError:
       title: 400BadRequestError
       type: object
@@ -738,30 +795,65 @@ components:
       properties:
         message:
           type: string
+          example: リクエストに失敗しました
+          description: 400エラーのレスポンスメッセージ
+      required:
+        - message
+      x-examples:
+        example-1:
+          message: リクエストに失敗しました
     401UnauthorizedError:
       title: 401UnauthorizedError
       type: object
       properties:
         message:
           type: string
+          example: 認証エラーが発生したよ
+          description: 401エラーのレスポンスメッセージ
+      required:
+        - message
+      x-examples:
+        example-1:
+          message: 認証エラーが発生したよ
     404NotFoundError:
       title: 404NotFoundError
       type: object
       properties:
         message:
           type: string
+          example: ページが見つからなかったよ
+          description: 404エラーのレスポンスメッセージ
+      required:
+        - message
+      x-examples:
+        example-1:
+          message: ページが見つからなかったよ
     500ServerError:
       title: 500ServerError
       type: object
       properties:
         message:
           type: string
+          example: サーバーエラーが発生したよ
+          description: 500エラーのレスポンスメッセージ
+      required:
+        - message
+      x-examples:
+        example-1:
+          message: サーバーエラーが発生したよ
     403ForbiddenError:
       title: 403ForbiddenError
       type: object
       properties:
         message:
           type: string
+          example: 権限が見つからなかったよ
+          description: 403エラーのレスポンスメッセージ
+      required:
+        - message
+      x-examples:
+        example-1:
+          message: 権限が見つからなかったよ
   securitySchemes:
     Access Token:
       type: http
