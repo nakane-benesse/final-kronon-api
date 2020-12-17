@@ -265,7 +265,7 @@ paths:
                 $ref: '#/components/schemas/401UnauthorizedError'
               examples: {}
         '403':
-          description: Forbidden
+          description: 権限がありません
           content:
             application/json:
               schema:
@@ -297,7 +297,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Schedule'
         '400':
-          description: Bad Request
+          description: 不正なリクエスト
           content:
             application/json:
               schema:
@@ -312,7 +312,7 @@ paths:
               examples: {}
         '403':
           description: |
-            Forbidden(他人の予定を修正しようとするときのエラー)
+            権限がありません
           content:
             application/json:
               schema:
