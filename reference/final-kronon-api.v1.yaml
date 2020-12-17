@@ -19,7 +19,7 @@ paths:
       operationId: post-login
       responses:
         '200':
-          description: ログイン成功
+          description: ログイン成功しました
           content:
             application/json:
               schema:
@@ -88,7 +88,7 @@ paths:
       operationId: delete-logout
       responses:
         '200':
-          description: ログアウト成功
+          description: ログアウト成功しました
         '500':
           description: サーバーエラーが発生しました
           content:
@@ -109,7 +109,7 @@ paths:
       operationId: post-users
       responses:
         '201':
-          description: アカウント登録に成功したよ
+          description: アカウント登録に成功しました
           content:
             application/json:
               schema:
@@ -461,7 +461,7 @@ paths:
       tags: []
       responses:
         '200':
-          description: カレンダー表示に成功
+          description: カレンダー表示に成功しました
           content:
             application/json:
               schema:
