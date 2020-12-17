@@ -1,0 +1,764 @@
+openapi: 3.0.0
+info:
+  title: final-kronon-api
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /login:
+    post:
+      summary: ''
+      operationId: post-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: ユーザーID情報を暗号化したもの
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: パラメータが不正だよ
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: メールアドレス
+                password:
+                  type: string
+                  format: password
+                  description: パスワード
+              required:
+                - email
+                - password
+      security: []
+  /logout:
+    delete:
+      summary: ''
+      operationId: delete-logout
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      parameters: []
+  /users:
+    parameters: []
+    post:
+      tags: []
+      summary: createUser
+      operationId: post-users
+      responses:
+        '201':
+          description: アカウント登録に成功したよ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    name: 杉
+                    email: sugi@gmail.com
+                    password: Kronon1122
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: BadRequest
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 杉杉
+                  description: 名前
+                email:
+                  type: string
+                  example: sugisugi@gmail.com
+                  format: email
+                  description: メールアドレス
+                password:
+                  type: string
+                  format: password
+                  example: Kronon1122
+                  description: パスワード
+              required:
+                - name
+                - email
+                - password
+      description: ユーザー登録
+      security: []
+  '/users/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: ユーザーID
+    get:
+      summary: detailUser
+      tags: []
+      responses:
+        '200':
+          description: アカウント情報の表示に成功しました
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: 杉
+                  email:
+                    type: string
+                    example: sugi@gmail.com
+                required:
+                  - name
+                  - email
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 名前
+                    example: 杉
+                  email:
+                    type: string
+                    format: email
+                    description: メールアドレス
+                    example: sugi@gmail.com
+                required:
+                  - name
+                  - email
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '404':
+          description: ページが見つかりませんでした
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      operationId: get-users-id
+      description: ログインユーザーの情報を表示する
+  '/schedules/{id}':
+    delete:
+      tags: []
+      summary: deleteSchedule
+      operationId: delete-schedules-id
+      responses:
+        '200':
+          description: 予定の削除に成功しました
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenError'
+        '404':
+          description: ページが見つかりませんでした
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundError'
+              examples:
+                example-1:
+                  value:
+                    message: ページが見つからなかったよ
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      description: 予定を削除する。（delete_flagを0=>1)
+    put:
+      tags: []
+      summary: updateSchedule
+      operationId: put-schedules-id
+      responses:
+        '200':
+          description: 予定修正成功しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: Badrequest
+        '401':
+          description: 認証エラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証エラーが発生したよ
+        '403':
+          description: |
+            Forbidden(他人の予定を修正しようとするときのエラー)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403ForbiddenError'
+              examples: {}
+        '404':
+          description: ページが見つかりませんでした
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundError'
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_date:
+                  type: string
+                  format: date
+                  example: '2020-12-31'
+                  description: 入力する日付
+                start_time:
+                  type: string
+                  format: time
+                  example: '17:00:00'
+                  description: 入力する開始時間
+                end_time:
+                  type: string
+                  format: time
+                  example: '18:00:00'
+                  description: 入力する終了時間
+                place:
+                  type: integer
+                  description: '0:オフィス/１:在宅/2:外出'
+                  example: 0
+                  enum:
+                    - 0
+                    - 1
+                    - 2
+                title:
+                  type: string
+                  example: くろのんアップ
+                  description: タイトル
+                content:
+                  type: string
+                  example: くろのんをAWSにアップロードする
+                  description: 内容
+              required:
+                - schedule_date
+                - start_time
+                - end_time
+                - place
+                - title
+        description: ''
+      description: 予定を修正する。
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: スケジュールID
+    get:
+      tags: []
+      summary: detailSchedule
+      operationId: get-schedules-id
+      responses:
+        '200':
+          description: 予定詳細を表示に成功しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    title: くろのん作成
+                    schedule_date: '2020-12-31'
+                    place: 0
+                    start_time: '13:00:00'
+                    end_time: '14:00:00'
+                    content: くろのんのAPIを作る
+                    delete_flag: 0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: BadRequest
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '404':
+          description: ページがみつかりません
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundError'
+              examples:
+                example-1:
+                  value:
+                    message: ページが見つからなかったよ
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      description: 予定詳細を表示する
+  /calendar:
+    get:
+      summary: showCalendar
+      tags: []
+      responses:
+        '200':
+          description: カレンダー表示に成功
+          content:
+            application/json:
+              schema:
+                type: array
+                description: |-
+                  その月に該当する予定を配列で返す
+                  その日の最初の予定（max２つ）を抽出してから返す
+                items:
+                  $ref: '#/components/schemas/Schedule'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      title: くろのん作成
+                      schedule_date: '2020-12-31'
+                      place: 0
+                      start_time: '13:00:00'
+                      end_time: '14:00:00'
+                      content: くろのんのAPIを作る
+                      delete_flag: 0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example:
+                  value:
+                    message: パラメータが不正だよ
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '404':
+          description: サイトが見つかりませんでした
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404NotFoundError'
+              examples:
+                example-1:
+                  value:
+                    message: サイトが見つからなかったよ
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      operationId: get-calendar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  description: 表示するための日付
+        description: ''
+      description: カレンダーを表示する
+    parameters: []
+  /schedules:
+    post:
+      tags: []
+      summary: createSchedule
+      operationId: post-schedules
+      responses:
+        '201':
+          description: 予定登録に成功しました
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    title: くろのん作成
+                    schedule_date: '2020-12-31'
+                    place: 0
+                    start_time: '13:00:00'
+                    end_time: '14:00:00'
+                    content: くろのんのAPIを作る
+                    delete_flag: 0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    code: '400'
+                    message: BadRequest
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      description: 予定を登録する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: くろのん作成
+                  description: タイトル
+                date:
+                  type: string
+                  format: date
+                  example: '2020-12-30'
+                  description: 日付
+                place:
+                  type: integer
+                  example: 0
+                  enum:
+                    - 0
+                    - 1
+                    - 2
+                  description: '場所 0:オフィス/1:在宅/2:外出'
+                start_time:
+                  type: string
+                  format: time
+                  example: '14:00:00'
+                  description: '開始時間 hh:mm形式'
+                end_time:
+                  type: string
+                  format: time
+                  example: '15:00:00'
+                  description: '終了時間 hh:mm形式'
+                content:
+                  type: string
+                  example: くろのんのAPIを作成する
+                  description: 内容
+              required:
+                - title
+                - date
+                - place
+                - start_time
+                - end_time
+  /schedules/search-by-day:
+    get:
+      summary: showSchedules
+      tags: []
+      responses:
+        '200':
+          description: 予定表の表示に成功しました
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ユーザーの名前と予定を配列で返す
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: 名前
+                    schedules:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Schedule'
+              examples:
+                example-1:
+                  value:
+                    - username: 杉
+                      schedule:
+                        id: 1
+                        title: くろのん作成
+                        schedule_date: '2020-12-31'
+                        place: 0
+                        start_time: '13:00:00'
+                        end_time: '14:00:00'
+                        content: くろのんのAPIを作る
+                        delete_flag: 0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400BadRequestError'
+              examples:
+                example-1:
+                  value:
+                    message: BadRequest
+        '401':
+          description: 認証に失敗しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401UnauthorizedError'
+              examples:
+                example-1:
+                  value:
+                    message: 認証に失敗したよ
+        '500':
+          description: サーバーエラーが発生しました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ServerError'
+              examples:
+                example-1:
+                  value:
+                    message: サーバーエラーが発生したよ
+      operationId: get-schedules
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  description: 表示する日付
+              required:
+                - date
+      description: ユーザーの予定一覧を表示する
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - name
+        - email
+    Schedule:
+      title: Schedule
+      type: object
+      properties:
+        id:
+          type: string
+    400BadRequestError:
+      title: 400BadRequestError
+      type: object
+      description: ''
+      properties:
+        message:
+          type: string
+    401UnauthorizedError:
+      title: 401UnauthorizedError
+      type: object
+      properties:
+        message:
+          type: string
+    404NotFoundError:
+      title: 404NotFoundError
+      type: object
+      properties:
+        message:
+          type: string
+    500ServerError:
+      title: 500ServerError
+      type: object
+      properties:
+        message:
+          type: string
+    403ForbiddenError:
+      title: 403ForbiddenError
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    Access Token:
+      type: http
+      scheme: bearer
+security:
+  - API Key - 1: []
