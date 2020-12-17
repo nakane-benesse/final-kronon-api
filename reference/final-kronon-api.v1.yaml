@@ -63,7 +63,7 @@ paths:
             examples:
               example-1:
                 value:
-                  email: sugisugi@email.com
+                  email: sugisugi@gmail.com
                   password: Kronon1122
       security: []
       description: ログインボタンをタップした時に使用する
@@ -109,20 +109,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: BadRequest
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       requestBody:
         content:
           application/json:
@@ -147,6 +141,12 @@ paths:
                 - name
                 - email
                 - password
+            examples:
+              example-1:
+                value:
+                  name: 杉杉
+                  email: sugisugi@gmail.com
+                  password: Kronon1122
       description: ユーザー登録
       security: []
   '/users/{id}':
@@ -167,17 +167,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: 杉
-                  email:
-                    type: string
-                    example: sugi@gmail.com
-                required:
-                  - name
-                  - email
+                $ref: '#/components/schemas/User'
+              examples: {}
             application/xml:
               schema:
                 type: object
@@ -204,10 +195,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証に失敗したよ
+              examples: {}
         '404':
           description: ページが見つかりませんでした
           content:
@@ -220,10 +208,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-users-id
       description: ログインユーザーの情報を表示する
   '/schedules/{id}':
@@ -488,48 +473,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Schedule'
-              examples:
-                example-1:
-                  value:
-                    id: 1
-                    title: くろのん作成
-                    schedule_date: '2020-12-31'
-                    place: 0
-                    start_time: '13:00:00'
-                    end_time: '14:00:00'
-                    content: くろのんのAPIを作る
-                    delete_flag: 0
+              examples: {}
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    code: '400'
-                    message: BadRequest
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証に失敗したよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       description: 予定を登録する
       requestBody:
         content:
@@ -574,6 +539,15 @@ paths:
                 - place
                 - start_time
                 - end_time
+            examples:
+              example-1:
+                value:
+                  title: くろのん作成
+                  date: '2020-12-30'
+                  place: 0
+                  start_time: '14:00:00'
+                  end_time: '15:00:00'
+                  content: くろのんのAPIを作成する
   /schedules/search-by-day:
     get:
       summary: showSchedules
@@ -599,7 +573,7 @@ paths:
               examples:
                 example-1:
                   value:
-                    - username: 杉
+                    - username: 杉杉
                       schedule:
                         id: 1
                         title: くろのん作成
@@ -615,30 +589,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: BadRequest
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証に失敗したよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-schedules
       requestBody:
         content:
