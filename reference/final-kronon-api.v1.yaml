@@ -3,13 +3,18 @@ tags:
   - name: FinalAPI
     description: openapi varsion
 info:
-  title: final-kronon-api
+  title: final-kronon-API
   version: '1.0'
+  description: API for android app
+  contact:
+    name: okuno_kronon
+    email: okuno@gmail.com
 servers:
   - url: 'http://localhost:3000'
 paths:
   /login:
     post:
+      tags: []
       summary: Login
       operationId: post-login
       responses:
@@ -72,6 +77,7 @@ paths:
       description: ログインボタンをタップした時に使用する
   /logout:
     delete:
+      tags: []
       summary: ''
       operationId: delete-logout
       responses:
