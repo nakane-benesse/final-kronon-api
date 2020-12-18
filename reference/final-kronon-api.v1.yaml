@@ -15,7 +15,7 @@ paths:
   /login:
     post:
       tags: []
-      summary: Login
+      summary: login
       operationId: post-login
       responses:
         '200':
@@ -84,7 +84,7 @@ paths:
   /logout:
     delete:
       tags: []
-      summary: ''
+      summary: logout
       operationId: delete-logout
       responses:
         '200':
