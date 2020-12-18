@@ -800,13 +800,6 @@ components:
           type: string
           example: くろのんのAPIを作る
           description: 内容
-        delete_flag:
-          type: integer
-          description: |-
-            0=>notdelete
-            1=>deleted 
-          default: 0
-          example: 0
       required:
         - id
         - title
@@ -814,7 +807,6 @@ components:
         - place
         - start_time
         - end_time
-        - delete_flag
     400BadRequestError:
       title: 400BadRequestError
       type: object
