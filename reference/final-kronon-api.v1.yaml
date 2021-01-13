@@ -43,20 +43,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       requestBody:
         content:
           application/json:
@@ -95,10 +89,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       parameters: []
       description: ログアウトボタンをタップした時に使用する
   /users:
@@ -127,20 +118,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       requestBody:
         content:
           application/json:
@@ -223,30 +208,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '404':
           description: ページが見つかりませんでした
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-users-id
       description: ログインユーザーの情報を表示する
   '/schedules/{id}':
@@ -403,57 +379,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Schedule'
-              examples:
-                example-1:
-                  value:
-                    id: 1
-                    title: くろのん作成
-                    schedule_date: '2020-12-31'
-                    place: 0
-                    start_time: '13:00:00'
-                    end_time: '14:00:00'
-                    content: くろのんのAPIを作る
-                    delete_flag: 0
+              examples: {}
         '400':
           description: 不正なリクエスト
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '404':
           description: ページがみつかりません
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/404NotFoundError'
-              examples:
-                example-1:
-                  value:
-                    message: ページが見つからなかったよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       description: 予定詳細を表示する
   /calendar:
     get:
@@ -465,12 +419,20 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                description: |-
-                  その月に該当する予定を配列で返す
-                  その日の最初の予定（max２つ）を抽出してから返す
-                items:
-                  $ref: '#/components/schemas/Schedule'
+                type: object
+                description: ''
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: integer
+                    default: 200
+                    description: 成功コード
+                  data:
+                    type: array
+                    description: その日の最初の予定を返す
+                    items:
+                      $ref: '#/components/schemas/Schedule'
               examples:
                 example-1:
                   value:
@@ -488,40 +450,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '404':
           description: サイトが見つかりませんでした
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/404NotFoundError'
-              examples:
-                example-1:
-                  value:
-                    message: ページが見つからなかったよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-calendar
       requestBody:
         content:
@@ -572,30 +522,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       description: 予定を登録する
       requestBody:
         content:
@@ -674,46 +615,63 @@ paths:
               examples:
                 example-1:
                   value:
-                    - username: 杉杉
-                      schedule:
-                        id: 1
-                        title: くろのん作成
-                        schedule_date: '2020-12-31'
-                        place: 0
-                        start_time: '13:00:00'
-                        end_time: '14:00:00'
-                        content: くろのんのAPIを作る
-                        delete_flag: 0
+                    - name: 杉杉
+                      schedules:
+                        - id: 1
+                          title: くろのん作成
+                          schedule_date: '2020-12-31'
+                          place: 0
+                          start_time: '13:00:00'
+                          end_time: '14:00:00'
+                          content: くろのんのAPIを作る
+                          delete_flag: 0
+                        - id: 2
+                          title: くろのん作成
+                          schedule_date: '2020-12-31'
+                          place: 0
+                          start_time: '13:00:00'
+                          end_time: '14:00:00'
+                          content: くろのんのAPIを作る
+                          delete_flag: 0
+                    - name: 奥野
+                      schedules:
+                        - id: 1
+                          title: くろのん作成
+                          schedule_date: '2020-12-31'
+                          place: 0
+                          start_time: '13:00:00'
+                          end_time: '14:00:00'
+                          content: くろのんのAPIを作る
+                          delete_flag: 0
+                        - id: 2
+                          title: くろのん作成
+                          schedule_date: '2020-12-31'
+                          place: 0
+                          start_time: '13:00:00'
+                          end_time: '14:00:00'
+                          content: くろのんのAPIを作る
+                          delete_flag: 0
         '400':
           description: 不正なリクエスト
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-schedules
       requestBody:
         content:
@@ -811,46 +769,83 @@ components:
       title: 400BadRequestError
       type: object
       description: ''
+      x-examples:
+        example-1:
+          success: false
+          code: 400
+          message: リクエストに失敗しました
       properties:
+        success:
+          type: boolean
+          description: falseを返す
+        code:
+          type: integer
+          default: 400
+          description: エラーコード
         message:
           type: string
           example: リクエストに失敗しました
           description: 400エラーのレスポンスメッセージ
       required:
+        - success
+        - code
         - message
-      x-examples:
-        example-1:
-          message: リクエストに失敗しました
     401UnauthorizedError:
       title: 401UnauthorizedError
       type: object
-      properties:
-        message:
-          type: string
-          example: 認証エラーが発生したよ
-          description: 401エラーのレスポンスメッセージ
-      required:
-        - message
       x-examples:
         example-1:
+          success: false
+          code: 401
           message: 認証エラーが発生したよ
+      properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 401
+        message:
+          type: string
+          description: 401エラーのレスポンスメッセージ
+          example: 認証エラーが発生したよ
+      required:
+        - code
+        - message
     404NotFoundError:
       title: 404NotFoundError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 404
         message:
           type: string
-          example: ページが見つからなかったよ
           description: 404エラーのレスポンスメッセージ
+          example: ページが見つからなかったよ
       required:
         - message
       x-examples:
         example-1:
+          success: false
+          code: 404
           message: ページが見つからなかったよ
     500ServerError:
       title: 500ServerError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 500
         message:
           type: string
           example: サーバーエラーが発生したよ
@@ -859,11 +854,20 @@ components:
         - message
       x-examples:
         example-1:
+          success: false
+          code: 500
           message: サーバーエラーが発生したよ
     403ForbiddenError:
       title: 403ForbiddenError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 403
         message:
           type: string
           example: 権限が見つからなかったよ
@@ -872,6 +876,8 @@ components:
         - message
       x-examples:
         example-1:
+          success: false
+          code: 403
           message: 権限が見つからなかったよ
   securitySchemes:
     Access Token:
