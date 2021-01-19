@@ -15,7 +15,7 @@ paths:
   /login:
     post:
       tags: []
-      summary: Login
+      summary: login
       operationId: post-login
       responses:
         '200':
@@ -84,7 +84,7 @@ paths:
   /logout:
     delete:
       tags: []
-      summary: ''
+      summary: logout
       operationId: delete-logout
       responses:
         '200':
@@ -398,22 +398,38 @@ paths:
       operationId: get-schedules-id
       responses:
         '200':
-          description: 予定詳細を表示に成功しました
+          description: OK
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Schedule'
+                type: object
+                properties:
+                  success:
+                    type: string
+                  code:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Schedule'
               examples:
-                example-1:
+                example-2:
                   value:
-                    id: 1
-                    title: くろのん作成
-                    schedule_date: '2020-12-31'
-                    place: 0
-                    start_time: '13:00:00'
-                    end_time: '14:00:00'
-                    content: くろのんのAPIを作る
-                    delete_flag: 0
+                    success: string
+                    code: string
+                    data:
+                      id: 1
+                      title: くろのん作成
+                      schedule_date: '2020-12-31'
+                      place: 0
+                      start_time: '13:00:00'
+                      end_time: '14:00:00'
+                      content: くろのんのAPIを作る
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: string
         '400':
           description: 不正なリクエスト
           content:
@@ -684,6 +700,17 @@ paths:
                         end_time: '14:00:00'
                         content: くろのんのAPIを作る
                         delete_flag: 0
+                example-2:
+                  value:
+                    - name: string
+                      schedules:
+                        - id: 1
+                          title: くろのん作成
+                          schedule_date: '2020-12-31'
+                          place: 0
+                          start_time: '13:00:00'
+                          end_time: '14:00:00'
+                          content: くろのんのAPIを作る
         '400':
           description: 不正なリクエスト
           content:
@@ -779,7 +806,7 @@ components:
           format: date
           description: 日付 yyyy-MM-dd形式
         place:
-          type: integer
+          type: string
           enum:
             - 0
             - 1
@@ -800,13 +827,6 @@ components:
           type: string
           example: くろのんのAPIを作る
           description: 内容
-        delete_flag:
-          type: integer
-          description: |-
-            0=>notdelete
-            1=>deleted 
-          default: 0
-          example: 0
       required:
         - id
         - title
@@ -814,7 +834,6 @@ components:
         - place
         - start_time
         - end_time
-        - delete_flag
     400BadRequestError:
       title: 400BadRequestError
       type: object
