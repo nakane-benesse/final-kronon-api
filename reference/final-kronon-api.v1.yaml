@@ -398,38 +398,22 @@ paths:
       operationId: get-schedules-id
       responses:
         '200':
-          description: OK
-          headers: {}
+          description: 予定詳細を表示に成功しました
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: string
-                  code:
-                    type: string
-                  data:
-                    $ref: '#/components/schemas/Schedule'
+                $ref: '#/components/schemas/Schedule'
               examples:
-                example-2:
+                example-1:
                   value:
-                    success: string
-                    code: string
-                    data:
-                      id: 1
-                      title: くろのん作成
-                      schedule_date: '2020-12-31'
-                      place: 0
-                      start_time: '13:00:00'
-                      end_time: '14:00:00'
-                      content: くろのんのAPIを作る
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  '':
-                    type: string
+                    id: 1
+                    title: くろのん作成
+                    schedule_date: '2020-12-31'
+                    place: 0
+                    start_time: '13:00:00'
+                    end_time: '14:00:00'
+                    content: くろのんのAPIを作る
+                    delete_flag: 0
         '400':
           description: 不正なリクエスト
           content:
@@ -477,7 +461,7 @@ paths:
       tags: []
       responses:
         '200':
-          description: カレンダー表示に成功しました
+          description: カレンダー表示に成功しまし
           content:
             application/json:
               schema:
@@ -806,7 +790,7 @@ components:
           format: date
           description: 日付 yyyy-MM-dd形式
         place:
-          type: string
+          type: integer
           enum:
             - 0
             - 1
@@ -871,9 +855,7 @@ components:
           description: 404エラーのレスポンスメッセージ
       required:
         - message
-      x-examples:
-        example-1:
-          message: ページが見つからなかったよ
+      x-examples: {}
     500ServerError:
       title: 500ServerError
       type: object
