@@ -769,7 +769,7 @@ components:
           id: 1
           title: くろのん作成
           schedule_date: '2020-12-31'
-          place: 0
+          place: '0'
           start_time: '13:00:00'
           end_time: '14:00:00'
           content: くろのんのAPIを作る
@@ -790,7 +790,7 @@ components:
           format: date
           description: 日付 yyyy-MM-dd形式
         place:
-          type: integer
+          type: string
           enum:
             - 0
             - 1
@@ -822,44 +822,83 @@ components:
       title: 400BadRequestError
       type: object
       description: ''
+      x-examples:
+        example-1:
+          success: false
+          code: 400
+          message: リクエストに失敗しました
       properties:
+        success:
+          type: boolean
+          description: falseを返す
+        code:
+          type: integer
+          default: 400
+          description: エラーコード
         message:
           type: string
           example: リクエストに失敗しました
           description: 400エラーのレスポンスメッセージ
       required:
+        - success
+        - code
         - message
-      x-examples:
-        example-1:
-          message: リクエストに失敗しました
     401UnauthorizedError:
       title: 401UnauthorizedError
       type: object
-      properties:
-        message:
-          type: string
-          example: 認証エラーが発生したよ
-          description: 401エラーのレスポンスメッセージ
-      required:
-        - message
       x-examples:
         example-1:
+          success: false
+          code: 401
           message: 認証エラーが発生したよ
+      properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 401
+        message:
+          type: string
+          description: 401エラーのレスポンスメッセージ
+          example: 認証エラーが発生したよ
+      required:
+        - code
+        - message
     404NotFoundError:
       title: 404NotFoundError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 404
         message:
           type: string
-          example: ページが見つからなかったよ
           description: 404エラーのレスポンスメッセージ
+          example: ページが見つからなかったよ
       required:
         - message
-      x-examples: {}
+      x-examples:
+        example-1:
+          success: false
+          code: 404
+          message: ページが見つからなかったよ
     500ServerError:
       title: 500ServerError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 500
         message:
           type: string
           example: サーバーエラーが発生したよ
@@ -868,11 +907,20 @@ components:
         - message
       x-examples:
         example-1:
+          success: false
+          code: 500
           message: サーバーエラーが発生したよ
     403ForbiddenError:
       title: 403ForbiddenError
       type: object
       properties:
+        success:
+          type: boolean
+          description: 処理に成功したかどうか（今回はfalse）
+        code:
+          type: integer
+          description: エラーコード
+          default: 403
         message:
           type: string
           example: 権限が見つからなかったよ
@@ -881,7 +929,9 @@ components:
         - message
       x-examples:
         example-1:
-          message: 権限が見つからなかったよ
+          success: false
+          code: 403
+          message: 認可されなかったよ
   securitySchemes:
     Access Token:
       type: http
