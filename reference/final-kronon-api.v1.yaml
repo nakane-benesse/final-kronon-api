@@ -113,14 +113,30 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      token:
+                        type: string
               examples:
                 example-1:
                   value:
-                    id: 1
-                    name: 杉
-                    email: sugi@gmail.com
-                    password: Kronon1122
+                    success: true
+                    code: 201
+                    data:
+                      name: sugi
+                      email: sugi@gmail.com
+                      token: dnakdnandwandankdnbakbda
         '400':
           description: 不正なリクエスト
           content:
@@ -191,12 +207,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
               examples:
-                example-1:
+                example-2:
                   value:
-                    name: 杉
-                    email: sugi@email.com
+                    success: true
+                    code: 200
+                    data:
+                      name: nakaneeee
+                      email: nakanesan@gmail.com
             application/xml:
               schema:
                 type: object
@@ -223,20 +254,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '404':
           description: ページが見つかりませんでした
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
@@ -649,7 +674,7 @@ paths:
                   start_time: '14:00:00'
                   end_time: '15:00:00'
                   content: くろのんのAPIを作成する
-  /schedules/search-by-day:
+  /show-schedules/search-by-day:
     get:
       summary: showSchedules
       tags: []
@@ -659,72 +684,60 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 description: ユーザーの名前と予定を配列で返す
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: 名前
-                    schedules:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Schedule'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        schedules:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Schedule'
               examples:
                 example-1:
                   value:
-                    - username: 杉杉
-                      schedule:
-                        id: 1
-                        title: くろのん作成
-                        schedule_date: '2020-12-31'
-                        place: 0
-                        start_time: '13:00:00'
-                        end_time: '14:00:00'
-                        content: くろのんのAPIを作る
-                        delete_flag: 0
-                example-2:
-                  value:
-                    - name: string
-                      schedules:
-                        - id: 1
-                          title: くろのん作成
-                          schedule_date: '2020-12-31'
-                          place: 0
-                          start_time: '13:00:00'
-                          end_time: '14:00:00'
-                          content: くろのんのAPIを作る
+                    success: true
+                    code: 200
+                    data:
+                      - name: string
+                        schedules:
+                          - id: 1
+                            title: くろのん作成
+                            schedule_date: '2020-12-31'
+                            place: 0
+                            start_time: '13:00:00'
+                            end_time: '14:00:00'
+                            content: くろのんのAPIを作る
         '400':
           description: 不正なリクエスト
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/400BadRequestError'
-              examples:
-                example-1:
-                  value:
-                    message: リクエストに失敗しました
+              examples: {}
         '401':
           description: 認証に失敗しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/401UnauthorizedError'
-              examples:
-                example-1:
-                  value:
-                    message: 認証エラーが発生したよ
+              examples: {}
         '500':
           description: サーバーエラーが発生しました
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/500ServerError'
-              examples:
-                example-1:
-                  value:
-                    message: サーバーエラーが発生したよ
+              examples: {}
       operationId: get-schedules
       requestBody:
         content:
@@ -739,6 +752,7 @@ paths:
               required:
                 - date
       description: ユーザーの予定一覧を表示する
+    parameters: []
 components:
   schemas:
     User:
