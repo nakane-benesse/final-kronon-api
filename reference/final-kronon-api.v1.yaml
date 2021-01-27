@@ -32,6 +32,10 @@ paths:
                   data:
                     type: object
                     properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
                       token:
                         type: string
               examples:
