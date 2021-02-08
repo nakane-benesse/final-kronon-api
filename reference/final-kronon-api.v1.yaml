@@ -844,7 +844,7 @@ components:
       type: object
       x-examples:
         example-1:
-          id: 1
+          schedule_id: 1
           title: くろのん作成
           schedule_date: '2020-12-31'
           place: '0'
@@ -854,7 +854,7 @@ components:
           delete_flag: 0
       description: ''
       properties:
-        id:
+        schedule_id:
           type: integer
           example: 1
           description: 予定の識別
@@ -890,7 +890,7 @@ components:
           example: くろのんのAPIを作る
           description: 内容
       required:
-        - id
+        - schedule_id
         - title
         - schedule_date
         - place
